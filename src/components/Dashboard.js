@@ -6,9 +6,8 @@ import Project from './Project';
 class Dashboard extends React.Component {
   render() {
     return (
-      <div>
-        <p>Dashboard</p>
-        <div>
+      <div className="Dashboard">
+        <div className="projects-container">
           {
             Object.keys(this.props.projects)
               .map(key => <Project key={key} projects={this.props.projects} index={key} />)

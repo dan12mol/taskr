@@ -6,9 +6,9 @@ class Project extends React.Component {
     const project = this.props.projects[this.props.index];
 
     return (
-      <div>
-        <p>{project.name}</p>
-        <p>{project.desc}</p>
+      <div className="Project">
+        <h2 className="project-name">{project.name}</h2>
+        <p className="project-desc">{project.desc}</p>
       </div>
     )
   }

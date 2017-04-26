@@ -1,0 +1,86 @@
+html {
+  font-size: 62.5%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Helvetica Neue';
+  font-weight: bold;
+}
+
+button,
+button:focus,
+button:active {
+  outline: none;
+}
+
+.Login {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.Login h1 {
+  font-size: 6.4rem;
+  margin-bottom: 5.1rem;
+}
+
+.Login .btn {
+  width: 50.2rem;
+  height: 10.2rem;
+  color: #fff;
+  font-size: 3.6rem;
+  margin-bottom: 4.1rem;
+  border: none;
+}
+
+.Login .facebook-btn {
+  background-color: #324d8f;
+}
+
+.Login .github-btn {
+  background-color: #202429;
+}
+
+.Project {
+  width: calc(33% - 9rem);
+  margin: 4.5rem;
+  border-radius: .5rem;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.Project:hover {
+  background: #eee;
+  cursor: pointer;
+}
+
+.Project .project-name,
+.Project .project-desc {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.Project .project-name {
+  font-size: 3.6rem;
+}
+
+.Project .project-desc {
+  flex: 1;
+  font-size: 1.8rem;
+}
+
+.projects-container {
+  padding-left: 10rem;
+  padding-right: 10rem;
+  display: flex;
+  flex-wrap: wrap;
+}

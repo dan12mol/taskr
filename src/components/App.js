@@ -56,8 +56,7 @@ class App extends React.Component {
   logOut() {
     base.unauth();
     this.setState({
-      uid: null,
-      projects: null
+      uid: null
     });
   }
 
