@@ -96,6 +96,38 @@ input:focus {
   font-size: 1.8rem;
 }
 
+.Project {
+  position: relative;
+}
+
+.Project .remove-btn {
+  background: #eee;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: absolute;
+  right: -1.4rem;
+  top: -1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+
+.Project:hover .remove-btn {
+  display: flex;
+}
+
+.Project:hover .remove-btn:hover {
+  background: #000;
+  color: #fff;
+}
+
+
+.Project .remove-btn img {
+  height: 60%;
+}
+
 .projects-container {
   padding-left: 10rem;
   padding-right: 10rem;

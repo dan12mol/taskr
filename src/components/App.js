@@ -15,6 +15,7 @@ class App extends React.Component {
     this.addNewProject = this.addNewProject.bind(this);
     this.showAddNewProject = this.showAddNewProject.bind(this);
     this.closeAddNewProjectModal = this.closeAddNewProjectModal.bind(this);
+    this.removeProject = this.removeProject.bind(this);
 
     this.state = {
       uid: null,
@@ -71,6 +72,16 @@ class App extends React.Component {
     
     this.setState({ projects });
   }
+  
+  removeProject(key) {
+
+    // TODO: Add a warning here before actually removing the project
+    const projects = {...this.state.projects};
+
+    projects[key] = null;
+    
+    this.setState({ projects });
+  }
 
   showAddNewProject() {
     this.setState({
@@ -97,7 +108,13 @@ class App extends React.Component {
     return (
       <div className="App">
         <button className="add-new-project-btn b-w-btn" onClick={this.showAddNewProject}>+ Add New Project</button>
-        <Dashboard addNewProject={this.addNewProject} showAddNewProject={this.state.showAddNewProject} closeAddNewProjectModal={this.closeAddNewProjectModal} projects={this.state.projects} />
+        <Dashboard
+        addNewProject={this.addNewProject}
+        showAddNewProject={this.state.showAddNewProject}
+        closeAddNewProjectModal={this.closeAddNewProjectModal}
+        projects={this.state.projects}
+        removeProject={this.removeProject}
+        />
       </div>
     )
   }
