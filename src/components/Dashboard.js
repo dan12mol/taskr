@@ -24,7 +24,7 @@ class Dashboard extends React.Component {
         <div className="projects-container">
           {
             Object.keys(this.props.projects)
-              .map(key => <Project key={key} projects={this.props.projects} removeProject={this.props.removeProject} index={key} />)
+              .map(key => <Project key={key} projects={this.props.projects} removeProject={this.props.removeProject} index={key} goToProject={this.props.goToProject} />)
           }
         </div>
       </div>
@@ -37,7 +37,8 @@ Dashboard.propTypes = {
   projects: React.PropTypes.object.isRequired,
   showAddNewProject: React.PropTypes.bool.isRequired,
   closeAddNewProjectModal: React.PropTypes.func.isRequired,
-  removeProject: React.PropTypes.func.isRequired
+  removeProject: React.PropTypes.func.isRequired,
+  goToProject: React.PropTypes.func.isRequired
 }
 
 export default Dashboard

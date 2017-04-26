@@ -65,6 +65,7 @@ input:focus {
 }
 
 .Project {
+  position: relative;
   width: calc(33% - 9rem);
   margin: 4.5rem;
   border-radius: .5rem;
@@ -94,10 +95,6 @@ input:focus {
 .Project .project-desc {
   flex: 1;
   font-size: 1.8rem;
-}
-
-.Project {
-  position: relative;
 }
 
 .Project .remove-btn {

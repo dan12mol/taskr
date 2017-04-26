@@ -16,6 +16,7 @@ class App extends React.Component {
     this.showAddNewProject = this.showAddNewProject.bind(this);
     this.closeAddNewProjectModal = this.closeAddNewProjectModal.bind(this);
     this.removeProject = this.removeProject.bind(this);
+    this.goToProject = this.goToProject.bind(this);
 
     this.state = {
       uid: null,
@@ -94,6 +95,11 @@ class App extends React.Component {
       showAddNewProject: false
     });
   }
+  
+  goToProject(key) {
+    console.log(`going to: /project/${key}`);
+    this.context.router.transitionTo(`/project/${key}`);
+  }
 
   render() {
 
@@ -114,11 +120,16 @@ class App extends React.Component {
         closeAddNewProjectModal={this.closeAddNewProjectModal}
         projects={this.state.projects}
         removeProject={this.removeProject}
+        goToProject={this.goToProject}
         />
       </div>
     )
   }
 
+}
+
+App.contextTypes = {
+  router: React.PropTypes.object
 }
 
 export default App;
