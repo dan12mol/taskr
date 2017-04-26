@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "re-base": "2.2.0",
+    "react": "15.3.2",
+    "react-dom": "15.3.2",
+    "react-router": "4.0.0-alpha.4"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
