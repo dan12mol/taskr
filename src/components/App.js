@@ -13,10 +13,13 @@ class App extends React.Component {
     this.authHandler = this.authHandler.bind(this);
     this.logOut = this.logOut.bind(this);
     this.addNewProject = this.addNewProject.bind(this);
+    this.showAddNewProject = this.showAddNewProject.bind(this);
+    this.closeAddNewProjectModal = this.closeAddNewProjectModal.bind(this);
 
     this.state = {
       uid: null,
-      projects: {}
+      projects: {},
+      showAddNewProject: false
     };
   }
 
@@ -69,9 +72,20 @@ class App extends React.Component {
     this.setState({ projects });
   }
 
+  showAddNewProject() {
+    this.setState({
+      showAddNewProject: true
+    });
+  }
+
+  closeAddNewProjectModal() {
+    this.setState({
+      showAddNewProject: false
+    });
+  }
+
   render() {
 
-    const logout = <button onClick={this.logOut}>Log Out!</button>
     if (!this.state.uid) {
       return (
         <div>
@@ -81,9 +95,9 @@ class App extends React.Component {
     }
 
     return (
-      <div>
-        {logout}
-        <Dashboard addNewProject={this.addNewProject} projects={this.state.projects} />
+      <div className="App">
+        <button className="add-new-project-btn b-w-btn" onClick={this.showAddNewProject}>+ Add New Project</button>
+        <Dashboard addNewProject={this.addNewProject} showAddNewProject={this.state.showAddNewProject} closeAddNewProjectModal={this.closeAddNewProjectModal} projects={this.state.projects} />
       </div>
     )
   }
