@@ -6,12 +6,14 @@ import './css/style.css';
 
 import NotFound from './components/NotFound';
 import App from './components/App';
+import TodoList from './components/TodoList';
 
 const Root = () => {
   return (
     <BrowserRouter>
       <div>
         <Match exactly pattern="/" component={App} />
+        <Match pattern="/project/:projectId" component={TodoList} />
         <Miss component={NotFound} />
       </div>
     </BrowserRouter>
