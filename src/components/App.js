@@ -1,4 +1,5 @@
 import React from 'react';
+import base from '../base';
 
 import Dashboard from './Dashboard';
 
@@ -8,22 +9,74 @@ class App extends React.Component {
     super();
 
     this.goToProject = this.goToProject.bind(this);
+    this.removeProject = this.removeProject.bind(this);
+    this.addNewProject = this.addNewProject.bind(this);
+    this.showAddNewProject = this.showAddNewProject.bind(this);
+    this.closeAddNewProjectModal = this.closeAddNewProjectModal.bind(this);
+
+    this.state = {
+      projects: {},
+      showAddNewProject: false
+    };
+  }
+
+  componentDidMount() {
+    this.ref = base.syncState(`users/${this.props.uid}/projects`, {
+      context: this,
+      state: 'projects'
+    });
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
   }
 
   goToProject(key) {
     this.context.router.transitionTo(`/project/${key}`);
   }
+
+  addNewProject(project) {
+    const projects = {...this.state.projects};
+
+    const timestamp = Date.now();
+    projects[`project-${timestamp}`] = project;
+    
+    this.setState({ projects });
+  }
+  
+  removeProject(key) {
+
+    // TODO: Add a warning here before actually removing the project
+    const projects = {...this.state.projects};
+
+    projects[key] = null;
+    
+    this.setState({ projects });
+  }
+
+  showAddNewProject() {
+    this.setState({
+      showAddNewProject: true
+    });
+  }
+
+  closeAddNewProjectModal() {
+    this.setState({
+      showAddNewProject: false
+    });
+  }
+  
   
   render() {
     return (
       <div className="App">
-        <button className="add-new-project-btn b-w-btn" onClick={this.props.showAddNewProject}>+ Add New Project</button>
+        <button className="add-new-project-btn b-w-btn" onClick={this.showAddNewProject}>+ Add New Project</button>
         <Dashboard
-        addNewProject={this.props.addNewProject}
-        showAddNewProject={this.props.showAddNewProject}
-        closeAddNewProjectModal={this.props.closeAddNewProjectModal}
-        projects={this.props.projects}
-        removeProject={this.props.removeProject}
+        addNewProject={this.addNewProject}
+        showAddNewProject={this.state.showAddNewProject}
+        closeAddNewProjectModal={this.closeAddNewProjectModal}
+        projects={this.state.projects}
+        removeProject={this.removeProject}
         goToProject={this.goToProject}
         />
       </div>
@@ -33,11 +86,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  showAddNewProject: React.PropTypes.bool.isRequired,
-  addNewProject: React.PropTypes.func.isRequired,
-  closeAddNewProjectModal: React.PropTypes.func.isRequired,
-  projects: React.PropTypes.object.isRequired,
-  removeProject: React.PropTypes.func.isRequired,
+  uid: React.PropTypes.string.isRequired
 }
 
 App.contextTypes = {

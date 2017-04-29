@@ -7,7 +7,7 @@ import './css/style.css';
 
 import NotFound from './components/NotFound';
 import App from './components/App';
-import TodoList from './components/TodoList';
+import History from './components/History';
 import Login from './components/Login';
 
 class Root extends React.Component {
@@ -18,15 +18,9 @@ class Root extends React.Component {
     this.authenticate = this.authenticate.bind(this);
     this.authHandler = this.authHandler.bind(this);
     this.logOut = this.logOut.bind(this);
-    this.addNewProject = this.addNewProject.bind(this);
-    this.showAddNewProject = this.showAddNewProject.bind(this);
-    this.closeAddNewProjectModal = this.closeAddNewProjectModal.bind(this);
-    this.removeProject = this.removeProject.bind(this);
 
     this.state = {
-      uid: null,
-      projects: {},
-      showAddNewProject: false
+      uid: null
     };
   }
 
@@ -38,10 +32,6 @@ class Root extends React.Component {
     });
   }
 
-  componentWillUnmount() {
-    base.removeBinding(this.ref);
-  }
-
   authenticate(service) {
     base.authWithOAuthPopup(service, this.authHandler);
   }
@@ -51,11 +41,6 @@ class Root extends React.Component {
       console.error(err);
       return;
     }
-
-    this.ref = base.syncState(`users/${authData.user.uid}/projects`, {
-      context: this,
-      state: 'projects'
-    });
 
     this.setState({
       uid: authData.user.uid,
@@ -70,37 +55,6 @@ class Root extends React.Component {
     });
   }
 
-  addNewProject(project) {
-    const projects = {...this.state.projects};
-
-    const timestamp = Date.now();
-    projects[`project-${timestamp}`] = project;
-    
-    this.setState({ projects });
-  }
-  
-  removeProject(key) {
-
-    // TODO: Add a warning here before actually removing the project
-    const projects = {...this.state.projects};
-
-    projects[key] = null;
-    
-    this.setState({ projects });
-  }
-
-  showAddNewProject() {
-    this.setState({
-      showAddNewProject: true
-    });
-  }
-
-  closeAddNewProjectModal() {
-    this.setState({
-      showAddNewProject: false
-    });
-  }
-  
   render() {
 
     if (!this.state.uid) {
@@ -115,13 +69,11 @@ class Root extends React.Component {
       <BrowserRouter>
         <div>
           <Match exactly pattern="/" render={() => <App
-            showAddNewProject={this.state.showAddNewProject}
-            addNewProject={this.addNewProject}
-            closeAddNewProjectModal={this.closeAddNewProjectModal}
-            projects={this.state.projects}
-            removeProject={this.removeProject}
+            uid={this.state.uid}
             />} />
-          <Match pattern="/project/:projectId" render={() => <TodoList />}/>
+          <Match pattern="/project/:projectId" render={() => <History
+            uid={this.state.uid}
+            />}/>
           <Miss component={NotFound} />
         </div>
       </BrowserRouter>

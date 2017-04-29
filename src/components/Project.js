@@ -1,13 +1,26 @@
 import React from 'react';
 
 class Project extends React.Component {
+
+  constructor() {
+    super();
+
+    this.removeProject = this.removeProject.bind(this);
+  }
+
+  removeProject(event) {
+    event.preventDefault();
+
+    this.props.removeProject(this.props.index);
+  }
+
   render() {
 
     const project = this.props.projects[this.props.index];
 
     return (
       <div className="Project" onClick={() => this.props.goToProject(this.props.index)}>
-        <div className="remove-btn" onClick={() => this.props.removeProject(this.props.index)}>
+        <div className="remove-btn" onClick={this.removeProject}>
           <img src="img/close-btn.png" alt="" />
         </div>
         <h2 className="project-name">{project.name}</h2>
