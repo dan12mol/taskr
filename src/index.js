@@ -9,6 +9,7 @@ import NotFound from './components/NotFound';
 import App from './components/App';
 import History from './components/History';
 import Login from './components/Login';
+import TodoList from './components/TodoList';
 
 class Root extends React.Component {
 
@@ -71,7 +72,10 @@ class Root extends React.Component {
           <Match exactly pattern="/" render={() => <App
             uid={this.state.uid}
             />} />
-          <Match pattern="/project/:projectId" render={() => <History
+          <Match exactly pattern="/project/:projectId" render={() => <History
+            uid={this.state.uid}
+            />}/>
+          <Match exactly pattern="/project/:projectId/list/:listName" render={() => <TodoList
             uid={this.state.uid}
             />}/>
           <Miss component={NotFound} />

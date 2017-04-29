@@ -32,7 +32,10 @@ class App extends React.Component {
   }
 
   goToProject(key) {
-    this.context.router.transitionTo(`/project/${key}`);
+    const now = new Date();
+    const dateParsed = `${now.getDate()}-${now.getMonth()}-${now.getFullYear()}`;
+
+    this.context.router.transitionTo(`/project/${key}/list/${dateParsed}`);
   }
 
   addNewProject(project) {

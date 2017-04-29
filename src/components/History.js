@@ -13,7 +13,7 @@ class History extends React.Component {
 
   componentDidMount() {
 
-    const projectId = location.pathname.replace('/project/', '');
+    const projectId = this.context.match.parent.params.projectId;
 
     this.ref = base.syncState(`users/${this.props.uid}/todos/${projectId}`, {
       context: this,
@@ -42,6 +42,10 @@ class History extends React.Component {
 
 History.propTypes = {
   uid: React.PropTypes.string.isRequired
+}
+
+History.contextTypes = {
+  match: React.PropTypes.object.isRequired
 }
 
 export default History
