@@ -13,6 +13,7 @@ class TodoList extends React.Component {
     this.addItem = this.addItem.bind(this);
     this.checkItem = this.checkItem.bind(this);
     this.uncheckItem = this.uncheckItem.bind(this);
+    this.removeItem = this.removeItem.bind(this);
 
     this.state = {
       items: {},
@@ -84,6 +85,16 @@ class TodoList extends React.Component {
 
   }
 
+  removeItem(key, listName) {
+    const list = {...this.state[listName]};
+
+    list[key] = null;
+
+    this.setState({
+      [listName]: list
+    });
+  }
+
   render() {
     return (
       <div className="TodoList">
@@ -91,14 +102,14 @@ class TodoList extends React.Component {
         <div className="items">
           {
             Object.keys(this.state.items)
-              .map(key => this.state.items[key] ? <Item key={key} index={key} items={this.state.items} checkItem={this.checkItem} /> : '')
+              .map(key => this.state.items[key] ? <Item key={key} index={key} items={this.state.items} checkItem={this.checkItem} removeItem={this.removeItem} /> : '')
           }
         </div>
         <h1>Completed</h1>
         <div className="completed-items">
           {
             Object.keys(this.state.completed)
-              .map(key => this.state.completed[key] ? <Completed key={key} index={key} completed={this.state.completed} uncheckItem={this.uncheckItem} /> : '')
+              .map(key => this.state.completed[key] ? <Completed key={key} index={key} completed={this.state.completed} uncheckItem={this.uncheckItem} removeItem={this.removeItem} /> : '')
           }
         </div>
       </div>

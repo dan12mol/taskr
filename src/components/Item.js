@@ -9,6 +9,7 @@ class Item extends React.Component {
       <div className="item">
         <button onClick={() => this.props.checkItem(this.props.index)}></button>
         <p>{item}</p>
+        <a onClick={() => this.props.removeItem(this.props.index, 'items')}>&times;</a>
       </div>
     )
   }
@@ -17,7 +18,8 @@ class Item extends React.Component {
 Item.propTypes = {
   items: React.PropTypes.object.isRequired,
   index: React.PropTypes.string.isRequired,
-  checkItem: React.PropTypes.func.isRequired
+  checkItem: React.PropTypes.func.isRequired,
+  removeItem: React.PropTypes.func.isRequired
 }
 
 export default Item;
