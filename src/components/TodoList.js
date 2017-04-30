@@ -1,13 +1,22 @@
 import React from 'react';
 import base from '../base';
 
+import AddItem from './AddItem';
+import Item from './Item'
+import Completed from './Completed';
+
 class TodoList extends React.Component {
 
   constructor() {
     super();
 
+    this.addItem = this.addItem.bind(this);
+    this.checkItem = this.checkItem.bind(this);
+    this.uncheckItem = this.uncheckItem.bind(this);
+
     this.state = {
-      items: {}
+      items: {},
+      completed: {}
     };
   }
 
@@ -16,19 +25,83 @@ class TodoList extends React.Component {
     const projectId = this.context.match.parent.params.projectId;
     const listName = this.context.match.parent.params.listName;
 
-    this.ref = base.syncState(`users/${this.props.uid}/todos/${projectId}/${listName}`, {
+    this.itemsRef = base.syncState(`users/${this.props.uid}/todos/${projectId}/${listName}/items`, {
       context: this,
       state: 'items'
+    });
+    this.completedItemsRef = base.syncState(`users/${this.props.uid}/todos/${projectId}/${listName}/completed`, {
+      context: this,
+      state: 'completed'
     });
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref);
+    base.removeBinding(this.itemsRef);
+    base.removeBinding(this.completedItemsRef);
+  }
+
+  addItem(item) {
+
+    const items = {...this.state.items};
+    const timestamp = Date.now();
+
+    items[`item-${timestamp}`] = item;
+
+    this.setState({ items });
+  }
+
+  checkItem(key) {
+
+    const items = {...this.state.items};
+    const item = items[key];
+
+    items[key] = null;
+
+    const completed = {...this.state.completed};
+    completed[key] = item;
+
+    this.setState({
+      items,
+      completed
+    });
+
+  }
+
+  uncheckItem(key) {
+
+    const completed = {...this.state.completed};
+    const item = completed[key];
+
+    completed[key] = null;
+
+    const items = {...this.state.items};
+    items[key] = item;
+
+    this.setState({
+      items,
+      completed
+    });
+
   }
 
   render() {
     return (
-      <p>TODOLIST</p>
+      <div className="TodoList">
+        <AddItem addItem={this.addItem} />
+        <div className="items">
+          {
+            Object.keys(this.state.items)
+              .map(key => this.state.items[key] ? <Item key={key} index={key} items={this.state.items} checkItem={this.checkItem} /> : '')
+          }
+        </div>
+        <h1>Completed</h1>
+        <div className="completed-items">
+          {
+            Object.keys(this.state.completed)
+              .map(key => this.state.completed[key] ? <Completed key={key} index={key} completed={this.state.completed} uncheckItem={this.uncheckItem} /> : '')
+          }
+        </div>
+      </div>
     )
   }
 }
